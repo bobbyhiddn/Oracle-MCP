@@ -1,0 +1,12 @@
+[project]
+name = "ordinal-mcp"
+version = "0.1.0"
+description = "Ordinal communication bus MCP server for Rhode — oracle calls, subagent messaging, and inter-level communication."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp[cli]>=1.26.0",
+]
+
+[project.scripts]
+ordinal-mcp = "server:main"
