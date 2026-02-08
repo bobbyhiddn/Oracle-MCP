@@ -97,29 +97,37 @@ async def oracle_call(
     context: str = "",
     urgency: str = "normal",
     timeout_seconds: int = 300,
+    from_level: int = 2,
 ) -> str:
-    """Send a question to the oracle (Micah) and wait for a response.
+    """Send a question up the ordinal chain and wait for a response.
 
-    This is an upward call on the ordinal bus. Use this when you need
-    human judgment, a decision, or information that cannot be computed.
+    This is an upward call on the ordinal bus. The request is routed based
+    on the caller's ordinal level:
 
-    The oracle will be notified via Telegram and can respond at their
-    convenience. The call will wait up to timeout_seconds for a response.
+    - from_level=1 (subagent): Routed to Rhode (level 2 orchestrator) for
+      immediate response. Use this when you are a subagent and need guidance
+      from the orchestrator — NOT the human.
+    - from_level=2 (orchestrator): Routed to Micah (level 3 oracle/human)
+      via Telegram. Use this when you need human judgment.
 
     Args:
-        question: The question to ask the oracle. Be clear and specific.
-        context: Optional context to help the oracle understand the situation.
+        question: The question to ask. Be clear and specific.
+        context: Optional context to help the responder understand the situation.
         urgency: How urgent is this? One of: low, normal, high, critical.
         timeout_seconds: How long to wait for a response (default 300s / 5min).
+        from_level: Your ordinal level. Use 1 if you are a subagent, 2 if you are the orchestrator (default 2).
     """
     request_id = str(uuid.uuid4())[:8]
     timestamp = datetime.now(timezone.utc).isoformat()
 
+    # Route to the next level up
+    to_level = from_level + 1
+
     request_data = {
         "id": request_id,
         "type": "oracle_call",
-        "from_level": 2,  # orchestrator level
-        "to_level": 3,    # oracle level
+        "from_level": from_level,
+        "to_level": to_level,
         "question": question,
         "context": context,
         "urgency": urgency,
