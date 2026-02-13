@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ordinal-MCP: An oracle communication bus for Rhode and its subagents.
+Oracle-MCP: An oracle communication bus for Rhode and its subagents.
 
 This MCP server implements the ordinal computation model where:
 - Level 0: Infrastructure (filesystem, network, containers)
@@ -30,7 +30,7 @@ from mcp.server.fastmcp import FastMCP
 # Configure logging to stderr (never stdout in stdio servers)
 logging.basicConfig(
     level=logging.INFO,
-    format="[Ordinal-MCP] %(asctime)s %(levelname)s: %(message)s",
+    format="[Oracle-MCP] %(asctime)s %(levelname)s: %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ for d in [BUS_DIR, REQUESTS_DIR, RESPONSES_DIR, HISTORY_DIR]:
     d.mkdir(parents=True, exist_ok=True)
 
 # Initialize the MCP server
-mcp = FastMCP("ordinal-mcp")
+mcp = FastMCP("oracle-mcp")
 
 # --- Ordinal Levels ---
 ORDINAL_LEVELS = {
@@ -173,7 +173,7 @@ def bus_status() -> str:
     history_entries = list(HISTORY_DIR.iterdir())
 
     status_lines = [
-        "=== Ordinal Bus Status ===",
+        "=== Oracle Bus Status ===",
         f"Bus directory: {BUS_DIR}",
         f"Pending requests: {len(pending_requests)}",
         f"Pending responses: {len(pending_responses)}",
@@ -269,7 +269,7 @@ def bus_history(limit: int = 10) -> str:
     if not history_dirs:
         return "No history on the bus yet."
 
-    lines = ["=== Ordinal Bus History ===", ""]
+    lines = ["=== Oracle Bus History ===", ""]
     for hist_dir in history_dirs:
         if not hist_dir.is_dir():
             continue
@@ -295,8 +295,8 @@ def bus_history(limit: int = 10) -> str:
 
 
 def main():
-    """Run the Ordinal-MCP server on stdio transport."""
-    logger.info("Ordinal-MCP starting...")
+    """Run the Oracle-MCP server on stdio transport."""
+    logger.info("Oracle-MCP starting...")
     logger.info(f"Bus directory: {BUS_DIR}")
     logger.info(f"Ordinal levels: {ORDINAL_LEVELS}")
     mcp.run(transport="stdio")

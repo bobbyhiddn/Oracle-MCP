@@ -1,6 +1,6 @@
-# Ordinal-MCP
+# Oracle-MCP
 
-An MCP server that implements an **ordinal communication bus** — a structured message-passing system between AI agents and humans based on ordinal levels of computation.
+An MCP server that implements an **oracle communication bus** — a structured message-passing system between AI agents and humans based on ordinal levels of computation.
 
 Built for the [Rhode](https://github.com/bobbyhiddn/Rhode) agent system. When an AI agent hits a decision boundary it can't resolve on its own, it makes an **oracle call** — a structured question sent up to the human operator. The human responds via Telegram, and the answer flows back down to the waiting agent.
 
@@ -87,7 +87,7 @@ from_level: int = 2       — Your ordinal level. 1 = subagent (answered by Rhod
 ```
 
 ### `bus_status`
-Check the current state of the bus — pending requests, responses, and history count.
+Check the current state of the Oracle bus — pending requests, responses, and history count.
 
 ### `list_pending_calls`
 List all oracle calls currently waiting for a response.
@@ -109,7 +109,7 @@ limit: int = 10  — Max number of exchanges to show
 
 ## CLI Tools
 
-The [Rhode](https://github.com/bobbyhiddn/Rhode) project provides two command-line tools that interact with the ordinal bus. These are installed as entry points when Rhode is installed (`pip install -e .` or `uv sync` in the Rhode repo).
+The [Rhode](https://github.com/bobbyhiddn/Rhode) project provides two command-line tools that interact with the Oracle bus. These are installed as entry points when Rhode is installed (`pip install -e .` or `uv sync` in the Rhode repo).
 
 ### `rhode-oracle`
 
@@ -149,7 +149,7 @@ Restart the Rhode service with task continuity. Writes a continuation prompt to 
 
 ```bash
 # Reboot with a continuation prompt
-rhode-reboot "Continue working on the Ordinal-MCP integration"
+rhode-reboot "Continue working on the Oracle-MCP integration"
 
 # Include context from before the reboot
 rhode-reboot "Pick up task X" --context "Was halfway through refactoring agent.py"
@@ -257,15 +257,15 @@ The request file is removed from `requests/`. The response file remains in `resp
 Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
-git clone https://github.com/bobbyhiddn/Ordinal-MCP.git
-cd Ordinal-MCP
+git clone https://github.com/bobbyhiddn/Oracle-MCP.git
+cd Oracle-MCP
 uv sync
 ```
 
 ### Run standalone
 
 ```bash
-uv run ordinal-mcp
+uv run oracle-mcp
 ```
 
 ### Configure as an MCP server
@@ -275,10 +275,10 @@ Add to your `.mcp.json` (e.g. in your Claude Code project root):
 ```json
 {
   "mcpServers": {
-    "ordinal-mcp": {
+    "oracle-mcp": {
       "type": "stdio",
       "command": "uv",
-      "args": ["run", "--directory", "/path/to/Ordinal-MCP", "ordinal-mcp"]
+      "args": ["run", "--directory", "/path/to/Oracle-MCP", "oracle-mcp"]
     }
   }
 }
