@@ -292,4 +292,4 @@ The ordinal levels give the system a clear hierarchy: infrastructure at the bott
 
 ## License
 
-MIT
+Copyright (c) 2026 Micah Longmire. All rights reserved. See [LICENSE](LICENSE).
